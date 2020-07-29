@@ -45,6 +45,19 @@ namespace GitHubContributionsParserV
 				current.counter = counter;
 				current.date = new DateTime(year, 1, 1);
 
+				foreach (HtmlNode nodeDay in doc.DocumentNode.SelectNodes("//rect[@class='day']"))
+				{
+					DayData day = new DayData();
+
+					string data_count = nodeDay.Attributes["data-count"].Value;
+					string data_date = nodeDay.Attributes["data-date"].Value;
+
+					day.counter = Int32.Parse(data_count);
+					day.date = DateTime.Parse(data_date);
+
+					current.calendar.Add(day);
+				}
+
 				data.years.Add(current);
 			}
 
