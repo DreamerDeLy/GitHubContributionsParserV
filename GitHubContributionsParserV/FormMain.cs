@@ -24,14 +24,36 @@ namespace GitHubContributionsParserV
 		private async void btnParse_Click(object sender, EventArgs e)
 		{
 			Data data = await ParseAsync();
-			richTextBox1.Text = JsonConvert.SerializeObject(data, Formatting.Indented);
+			//richTextBox1.Text = JsonConvert.SerializeObject(data, Formatting.Indented) + "\r\n";
+
+			foreach (YearData year in data.years)
+			{
+				richTextBox1.Text += $"{year.date.Year} - {year.counter}\r\n";
+			}
+
+
+			var groupedMonths = data.years[data.years.Count-1].calendar
+				.GroupBy(d => d.date.Month)
+				.Select(grp => grp.ToList())
+				.ToList();
+
+			foreach (List<DayData> month in groupedMonths)
+			{
+				int counter = 0;
+				foreach (DayData day in month)
+				{
+					counter += day.counter;
+				}
+
+				richTextBox1.Text += $"{month[0].date.Month} - {counter}\r\n";
+			}
 		}
 
 		private Data Parse()
 		{
 			Data data = new Data();
 
-			for (int year = 2015; year <= DateTime.Now.Year; year++)
+			for (int year = 2017; year <= DateTime.Now.Year; year++)
 			{
 				string url = $"https://github.com/{tbUser.Text}/?tab=overview&from={year}-01-01&to={year}-12-31";
 
