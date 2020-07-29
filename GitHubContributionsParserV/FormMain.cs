@@ -72,6 +72,35 @@ namespace GitHubContributionsParserV
 
 				richTextBox1.Text += $"{dayOfWeek[0].date.DayOfWeek.ToString().Substring(0, 3)} - {counter}\r\n";
 			}
+
+
+			int longest_streak = 0;
+			DateTime longest_streak_start = new DateTime(2000, 01, 01);
+			DateTime longest_streak_end = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+			int current_streak = 0;
+			DateTime current_streak_start = new DateTime(2000, 01, 01);
+
+			foreach (DayData day in data.years[data.years.Count - 1].calendar)
+			{
+				if (day.counter > 0)
+				{
+					if (current_streak == 0) current_streak_start = day.date;
+					current_streak += 1;
+				}
+				else
+				{
+					if (current_streak > longest_streak)
+					{
+						longest_streak = current_streak;
+						longest_streak_start = current_streak_start;
+						longest_streak_end = day.date;
+					}
+
+					current_streak = 0;
+				}
+			}
+
+			richTextBox1.Text += $"Longest streak: {longest_streak} ({longest_streak_start.ToString("yyyy-MM-dd")} - {longest_streak_end.ToString("yyyy-MM-dd")})\r\n";
 		}
 
 		private Data Parse()
@@ -85,7 +114,7 @@ namespace GitHubContributionsParserV
 				HtmlAgilityPack.HtmlWeb web = new HtmlAgilityPack.HtmlWeb();
 				HtmlAgilityPack.HtmlDocument doc = web.Load(url);
 
-				HtmlAgilityPack.HtmlNode node = doc.DocumentNode.SelectSingleNode("//body/div[4]/main//div[2]/div/div[2]/div[2]/div/div[3]/div[1]/div/h2");
+				HtmlAgilityPack.HtmlNode node = doc.DocumentNode.SelectSingleNode("//h2[@class='f4 text-normal mb-2']");
 				int counter = Int32.Parse(node.InnerText.Trim().Split()[0]);
 
 				YearData current = new YearData();
