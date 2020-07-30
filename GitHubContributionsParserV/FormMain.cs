@@ -24,55 +24,29 @@ namespace GitHubContributionsParserV
 		private async void btnParse_Click(object sender, EventArgs e)
 		{
 			Data data = await ParseAsync();
-			//richTextBox1.Text = JsonConvert.SerializeObject(data, Formatting.Indented) + "\r\n";
+
+			YearData last_year = data.years[data.years.Count - 1];
 
 
 			richTextBox1.Text += "Year: \r\n";
-
 			foreach (YearData year in data.years)
 			{
 				richTextBox1.Text += $"{year.date.Year} - {year.counter}\r\n";
 			}
 
 			richTextBox1.Text += "Month: \r\n";
-
-			var groupedMonths = data.years[data.years.Count-1].calendar
-				.GroupBy(d => d.date.Month)
-				.Select(grp => grp.ToList())
-				.ToList();
-
-			foreach (List<DayData> month in groupedMonths)
+			last_year.CalculateCommitsPerMonths();
+			foreach (MonthData month in last_year.months_data)
 			{
-				int counter = 0;
-				foreach (DayData day in month)
-				{
-					counter += day.counter;
-				}
-
-				richTextBox1.Text += $"{month[0].date.Month} - {counter}\r\n";
+				richTextBox1.Text += $"{month.date.Month} - {month.counter}\r\n";
 			}
 
 			richTextBox1.Text += "DayOfWeek: \r\n";
-
-			var groupedDayOfWeek = data.years[data.years.Count - 1].calendar
-				.GroupBy(d => d.date.DayOfWeek)
-				.Select(grp => grp.ToList())
-				.ToList();
-
-			//((int)DateTime.Now.DayOfWeek + 6) % 7 + 1
-			groupedDayOfWeek.Sort((x, y) => (((int)x[0].date.DayOfWeek + 6) % 7 + 1).CompareTo(((int)y[0].date.DayOfWeek + 6) % 7 + 1));
-
-			foreach (List<DayData> dayOfWeek in groupedDayOfWeek)
+			last_year.CalculateCommitsPerDayOfWeek();
+			foreach (DayOfWeekData dayOfWeekData in last_year.dayofweek_data)
 			{
-				int counter = 0;
-				foreach (DayData day in dayOfWeek)
-				{
-					counter += day.counter;
-				}
-
-				richTextBox1.Text += $"{dayOfWeek[0].date.DayOfWeek.ToString().Substring(0, 3)} - {counter}\r\n";
+				richTextBox1.Text += $"{dayOfWeekData.day_of_week.ToString().Substring(0, 3)} - {dayOfWeekData.counter}\r\n";
 			}
-
 
 			int longest_streak = 0;
 			DateTime longest_streak_start = new DateTime(2000, 01, 01);
@@ -117,9 +91,7 @@ namespace GitHubContributionsParserV
 				HtmlAgilityPack.HtmlNode node = doc.DocumentNode.SelectSingleNode("//h2[@class='f4 text-normal mb-2']");
 				int counter = Int32.Parse(node.InnerText.Trim().Split()[0]);
 
-				YearData current = new YearData();
-				current.counter = counter;
-				current.date = new DateTime(year, 1, 1);
+				YearData current = new YearData(counter, new DateTime(year, 1, 1));
 
 				foreach (HtmlNode nodeDay in doc.DocumentNode.SelectNodes("//rect[@class='day']"))
 				{
