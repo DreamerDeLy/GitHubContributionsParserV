@@ -33,6 +33,9 @@ namespace GitHubContributionsParserV
 		public int max_per_day = 0;
 		public DateTime max_per_day_date;
 
+		public int days_with_commits = 0;
+		public int days_without_commits = 0;
+
 		public YearData(int counter, DateTime date)
 		{
 			this.counter = counter;
@@ -116,6 +119,16 @@ namespace GitHubContributionsParserV
 					max_per_day_date = day.date;
 				}
 			}
+		}
+
+		public void CalculateDaysWithCommits()
+		{
+			var days_with_commits_list = calendar
+				.Where(d => (d.counter > 0))
+				.ToList();
+
+			days_with_commits = days_with_commits_list.Count;
+			days_without_commits = Convert.ToInt32((DateTime.Now - date).TotalDays) - days_with_commits;
 		}
 	}
 

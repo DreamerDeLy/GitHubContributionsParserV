@@ -60,6 +60,16 @@ namespace GitHubContributionsParserV
 				last_year.longest_streak_start.ToString("yyyy-MM-dd"), 
 				last_year.longest_streak_end.ToString("yyyy-MM-dd")
 				);
+
+			last_year.CalculateDaysWithCommits();
+			richTextBox1.Text += String.Format("Days with commits:    {0} ({1:##.##}%)\r\n", 
+				last_year.days_with_commits,
+				((double)last_year.days_with_commits / (double)((double)last_year.days_with_commits + (double)last_year.days_without_commits)) * 100.0
+				);
+			richTextBox1.Text += String.Format("Days without commits: {0} ({1:##.##}%)\r\n",
+				last_year.days_without_commits,
+				((double)last_year.days_without_commits / (double)((double)last_year.days_with_commits + (double)last_year.days_without_commits)) * 100.0
+				);
 		}
 
 		private Data Parse()
