@@ -48,33 +48,12 @@ namespace GitHubContributionsParserV
 				richTextBox1.Text += $"{dayOfWeekData.day_of_week.ToString().Substring(0, 3)} - {dayOfWeekData.counter}\r\n";
 			}
 
-			int longest_streak = 0;
-			DateTime longest_streak_start = new DateTime(2000, 01, 01);
-			DateTime longest_streak_end = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
-			int current_streak = 0;
-			DateTime current_streak_start = new DateTime(2000, 01, 01);
-
-			foreach (DayData day in data.years[data.years.Count - 1].calendar)
-			{
-				if (day.counter > 0)
-				{
-					if (current_streak == 0) current_streak_start = day.date;
-					current_streak += 1;
-				}
-				else
-				{
-					if (current_streak > longest_streak)
-					{
-						longest_streak = current_streak;
-						longest_streak_start = current_streak_start;
-						longest_streak_end = day.date;
-					}
-
-					current_streak = 0;
-				}
-			}
-
-			richTextBox1.Text += $"Longest streak: {longest_streak} ({longest_streak_start.ToString("yyyy-MM-dd")} - {longest_streak_end.ToString("yyyy-MM-dd")})\r\n";
+			last_year.CalculateLongestStreak();
+			richTextBox1.Text += String.Format("Longest streak: {0} ({1} - {2})\r\n", 
+				last_year.longest_streak, 
+				last_year.longest_streak_start.ToString("yyyy-MM-dd"), 
+				last_year.longest_streak_end.ToString("yyyy-MM-dd")
+				);
 		}
 
 		private Data Parse()

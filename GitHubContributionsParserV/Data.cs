@@ -26,6 +26,10 @@ namespace GitHubContributionsParserV
 		public List<MonthData> months_data = new List<MonthData>();
 		public List<DayOfWeekData> dayofweek_data = new List<DayOfWeekData>();
 
+		public int longest_streak = 0;
+		public DateTime longest_streak_start = new DateTime(2000, 01, 01);
+		public DateTime longest_streak_end = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+
 		public YearData(int counter, DateTime date)
 		{
 			this.counter = counter;
@@ -70,6 +74,32 @@ namespace GitHubContributionsParserV
 				}
 
 				dayofweek_data.Add(new DayOfWeekData(counter, dayOfWeek[0].date.DayOfWeek));
+			}
+		}
+
+		public void CalculateLongestStreak()
+		{
+			int current_streak = 0;
+			DateTime current_streak_start = new DateTime(2000, 01, 01);
+
+			foreach (DayData day in calendar)
+			{
+				if (day.counter > 0)
+				{
+					if (current_streak == 0) current_streak_start = day.date;
+					current_streak += 1;
+				}
+				else
+				{
+					if (current_streak > longest_streak)
+					{
+						longest_streak = current_streak;
+						longest_streak_start = current_streak_start;
+						longest_streak_end = day.date;
+					}
+
+					current_streak = 0;
+				}
 			}
 		}
 	}
