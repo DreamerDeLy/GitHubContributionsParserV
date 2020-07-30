@@ -36,6 +36,9 @@ namespace GitHubContributionsParserV
 		public int days_with_commits = 0;
 		public int days_without_commits = 0;
 
+		public double commits_per_day_avg = 0;
+		public int commits_per_year_forecast = 0;
+
 		public YearData(int counter, DateTime date)
 		{
 			this.counter = counter;
@@ -129,6 +132,20 @@ namespace GitHubContributionsParserV
 
 			days_with_commits = days_with_commits_list.Count;
 			days_without_commits = Convert.ToInt32((DateTime.Now - date).TotalDays) - days_with_commits;
+		}
+
+		public void CalculateCommitsPerDayAvg()
+		{
+			commits_per_day_avg = (double)counter / (double)DateTime.Now.DayOfYear;
+			
+			if (DateTime.IsLeapYear(date.Year))
+			{
+				commits_per_year_forecast = Convert.ToInt32(366.0 * commits_per_day_avg);
+			}
+			else
+			{
+				commits_per_year_forecast = Convert.ToInt32(365.0 * commits_per_day_avg);
+			}
 		}
 	}
 

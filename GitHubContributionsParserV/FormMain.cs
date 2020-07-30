@@ -70,6 +70,10 @@ namespace GitHubContributionsParserV
 				last_year.days_without_commits,
 				((double)last_year.days_without_commits / (double)((double)last_year.days_with_commits + (double)last_year.days_without_commits)) * 100.0
 				);
+
+			last_year.CalculateCommitsPerDayAvg();
+			richTextBox1.Text += String.Format("Commits per day: {0:##.##}\r\n", last_year.commits_per_day_avg);
+			richTextBox1.Text += String.Format("Commits per year forecast: {0}\r\n", last_year.commits_per_year_forecast);
 		}
 
 		private Data Parse()
