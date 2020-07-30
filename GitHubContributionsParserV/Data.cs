@@ -30,6 +30,9 @@ namespace GitHubContributionsParserV
 		public DateTime longest_streak_start = new DateTime(2000, 01, 01);
 		public DateTime longest_streak_end = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
 
+		public int max_per_day = 0;
+		public DateTime max_per_day_date;
+
 		public YearData(int counter, DateTime date)
 		{
 			this.counter = counter;
@@ -99,6 +102,18 @@ namespace GitHubContributionsParserV
 					}
 
 					current_streak = 0;
+				}
+			}
+		}
+
+		public void CalculateMaxCommitsPerDay()
+		{
+			foreach (DayData day in calendar)
+			{
+				if (day.counter > max_per_day)
+				{
+					max_per_day = day.counter;
+					max_per_day_date = day.date;
 				}
 			}
 		}

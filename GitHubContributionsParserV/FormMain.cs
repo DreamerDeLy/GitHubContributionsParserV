@@ -48,6 +48,12 @@ namespace GitHubContributionsParserV
 				richTextBox1.Text += $"{dayOfWeekData.day_of_week.ToString().Substring(0, 3)} - {dayOfWeekData.counter}\r\n";
 			}
 
+			last_year.CalculateMaxCommitsPerDay();
+			richTextBox1.Text += String.Format("Max commits per day: {0} ({1})\r\n", 
+				last_year.max_per_day, 
+				last_year.max_per_day_date.ToString("yyyy-MM-dd")
+				);
+
 			last_year.CalculateLongestStreak();
 			richTextBox1.Text += String.Format("Longest streak: {0} ({1} - {2})\r\n", 
 				last_year.longest_streak, 
