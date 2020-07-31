@@ -37,7 +37,7 @@
 			// 
 			this.btnParse.Location = new System.Drawing.Point(118, 11);
 			this.btnParse.Name = "btnParse";
-			this.btnParse.Size = new System.Drawing.Size(75, 23);
+			this.btnParse.Size = new System.Drawing.Size(75, 22);
 			this.btnParse.TabIndex = 0;
 			this.btnParse.Text = "Parse";
 			this.btnParse.UseVisualStyleBackColor = true;
