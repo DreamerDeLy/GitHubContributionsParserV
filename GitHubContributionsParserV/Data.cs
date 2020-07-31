@@ -137,7 +137,7 @@ namespace GitHubContributionsParserV
 		public void CalculateCommitsPerDayAvg()
 		{
 			commits_per_day_avg = (double)counter / (double)DateTime.Now.DayOfYear;
-			
+
 			if (DateTime.IsLeapYear(date.Year))
 			{
 				commits_per_year_forecast = Convert.ToInt32(366.0 * commits_per_day_avg);
@@ -154,10 +154,19 @@ namespace GitHubContributionsParserV
 		public int counter;
 		public DateTime date;
 
+		public double commits_per_day_avg = 0;
+		public int commits_per_month_forecast = 0;
+
 		public MonthData(int counter, DateTime date)
 		{
 			this.counter = counter;
 			this.date = date;
+		}
+
+		public void CalculateCommitsPerDayAvg()
+		{
+			commits_per_day_avg = (double)counter / (double)DateTime.Now.Day;
+			commits_per_month_forecast = Convert.ToInt32((double)DateTime.DaysInMonth(date.Year, date.Month) * (double)commits_per_day_avg);
 		}
 	}
 
