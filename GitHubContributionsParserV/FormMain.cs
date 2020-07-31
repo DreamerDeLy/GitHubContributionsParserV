@@ -37,7 +37,17 @@ namespace GitHubContributionsParserV
 			last_year.CalculateCommitsPerMonths();
 			foreach (MonthData month in last_year.months_data)
 			{
-				richTextBox1.Text += $"{month.date.Month} - {month.counter}\r\n";
+				int target = 1000 / 12;
+				int to_target = month.counter - target;
+
+				if (month.counter > 0)
+				{
+					richTextBox1.Text += String.Format("{0:##} - {1} ({2})\r\n", month.date.Month, month.counter, to_target);
+				}
+				else
+				{
+					richTextBox1.Text += String.Format("{0:##} - {1}\r\n", month.date.Month, month.counter);
+				}
 			}
 
 			richTextBox1.Text += "DayOfWeek: \r\n";
