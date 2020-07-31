@@ -126,11 +126,7 @@ namespace GitHubContributionsParserV
 
 		public void CalculateDaysWithCommits()
 		{
-			var days_with_commits_list = calendar
-				.Where(d => (d.counter > 0))
-				.ToList();
-
-			days_with_commits = days_with_commits_list.Count;
+			days_with_commits = calendar.Where(d => (d.counter > 0)).Count();
 			days_without_commits = Convert.ToInt32((DateTime.Now - date).TotalDays) - days_with_commits;
 		}
 

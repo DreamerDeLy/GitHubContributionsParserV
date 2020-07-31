@@ -82,13 +82,13 @@ namespace GitHubContributionsParserV
 
 			richTextBox1.Text += "Year:\r\n";
 			last_year.CalculateCommitsPerDayAvg();
-			richTextBox1.Text += String.Format("Commits per day: {0:##.000}\r\n", last_year.commits_per_day_avg);
+			richTextBox1.Text += String.Format("Commits per day: {0:#0.000}\r\n", last_year.commits_per_day_avg);
 			richTextBox1.Text += String.Format("Commits per year forecast: {0}\r\n", last_year.commits_per_year_forecast);
 
 			richTextBox1.Text += "Month:\r\n";
 			MonthData last_month = last_year.months_data[DateTime.Now.Month-1];
 			last_month.CalculateCommitsPerDayAvg();
-			richTextBox1.Text += String.Format("Commits per day: {0:##.000}\r\n", last_month.commits_per_day_avg);
+			richTextBox1.Text += String.Format("Commits per day: {0:#0.000}\r\n", last_month.commits_per_day_avg);
 			richTextBox1.Text += String.Format("Commits per month forecast: {0}\r\n", last_month.commits_per_month_forecast);
 		}
 
