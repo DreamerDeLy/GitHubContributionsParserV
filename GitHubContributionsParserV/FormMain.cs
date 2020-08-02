@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using HtmlAgilityPack;
 using Newtonsoft.Json;
+using ScottPlot;
 
 namespace GitHubContributionsParserV
 {
@@ -91,6 +92,24 @@ namespace GitHubContributionsParserV
 			last_month.CalculateCommitsPerDayAvg();
 			richTextBox1.Text += String.Format("Commits per day: {0:#0.000}\r\n", last_month.commits_per_day_avg);
 			richTextBox1.Text += String.Format("Commits per month forecast: {0}\r\n", last_month.commits_per_month_forecast);
+
+
+			double[] xs = DataGen.Consecutive(last_year.months_data.Count);
+			double[] ys = new double[last_year.months_data.Count];
+			string[] labels = new string[last_year.months_data.Count];
+
+			for (int i = 0; i < last_year.months_data.Count; i++)
+			{
+				ys[i] = last_year.months_data[i].counter;
+				labels[i] = last_year.months_data[i].date.ToString("MMMM").Substring(0, 3);
+			}
+
+
+			fpMonths.plt.PlotBar(xs, ys, horizontal: true);
+			fpMonths.plt.Grid(enableHorizontal: false, lineStyle: LineStyle.Dot);
+			fpMonths.plt.YTicks(xs, labels);
+
+			fpMonths.Render();
 		}
 
 		private Data Parse()
