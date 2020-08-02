@@ -144,19 +144,7 @@ namespace GitHubContributionsParserV
 				commits_per_year_forecast = Convert.ToInt32(365.0 * commits_per_day_avg);
 			}
 
-			commits_per_day_wn_avg = 0;
-			int i = 0;
-
-			foreach (DayData day in calendar)
-			{
-				if (day.counter > 0)
-				{
-					i++;
-					commits_per_day_wn_avg += day.counter;
-				}
-			}
-
-			commits_per_day_wn_avg = (double)commits_per_day_wn_avg / (double)i;
+			commits_per_day_wn_avg = calendar.Where(d => d.counter > 0).Average(d => d.counter);
 		}
 	}
 
