@@ -82,6 +82,7 @@ namespace GitHubContributionsParserV
 
 			richTextBox1.Text += "Year:\r\n";
 			last_year.CalculateCommitsPerDayAvg();
+			richTextBox1.Text += String.Format("Commits per day (without zero): {0:#0.000}\r\n", last_year.commits_per_day_wn_avg);
 			richTextBox1.Text += String.Format("Commits per day: {0:#0.000}\r\n", last_year.commits_per_day_avg);
 			richTextBox1.Text += String.Format("Commits per year forecast: {0}\r\n", last_year.commits_per_year_forecast);
 
