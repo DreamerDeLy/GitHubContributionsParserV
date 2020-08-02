@@ -55,12 +55,7 @@ namespace GitHubContributionsParserV
 
 			foreach (List<DayData> month in groupedMonths)
 			{
-				int counter = 0;
-				foreach (DayData day in month)
-				{
-					counter += day.counter;
-				}
-
+				int counter = month.Sum(d => d.counter);
 				months_data.Add(new MonthData(counter, new DateTime(month[0].date.Year, month[0].date.Month, 1)));
 			}
 		}
@@ -77,12 +72,7 @@ namespace GitHubContributionsParserV
 
 			foreach (List<DayData> dayOfWeek in groupedDayOfWeek)
 			{
-				int counter = 0;
-				foreach (DayData day in dayOfWeek)
-				{
-					counter += day.counter;
-				}
-
+				int counter = dayOfWeek.Sum(d => d.counter);
 				dayofweek_data.Add(new DayOfWeekData(counter, dayOfWeek[0].date.DayOfWeek));
 			}
 		}
