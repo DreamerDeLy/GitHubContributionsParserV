@@ -93,6 +93,13 @@ namespace GitHubContributionsParserV
 			richTextBox1.Text += String.Format("Commits per day: {0:#0.000}\r\n", last_month.commits_per_day_avg);
 			richTextBox1.Text += String.Format("Commits per month forecast: {0}\r\n", last_month.commits_per_month_forecast);
 
+			RenderGraphMonthsData(data);
+			RenderGraphDaysOfWeek(data);
+		}
+
+		private void RenderGraphMonthsData(Data data)
+		{
+			YearData last_year = data.years[data.years.Count - 1];
 
 			double[] xs = DataGen.Consecutive(last_year.months_data.Count);
 			double[] ys = new double[last_year.months_data.Count];
@@ -101,15 +108,37 @@ namespace GitHubContributionsParserV
 			for (int i = 0; i < last_year.months_data.Count; i++)
 			{
 				ys[i] = last_year.months_data[i].counter;
-				labels[i] = last_year.months_data[i].date.ToString("MMMM").Substring(0, 3);
+				labels[i] = last_year.months_data[i].date.ToString("MMMM").Substring(0, 3).ToUpper();
 			}
 
-
-			fpMonths.plt.PlotBar(xs, ys, horizontal: true);
+			fpMonths.plt.PlotVLine(x: 1000 / 12, color: Color.Red);
+			fpMonths.plt.PlotBar(xs, ys, horizontal: true, fillColor: Color.SteelBlue);
 			fpMonths.plt.Grid(enableHorizontal: false, lineStyle: LineStyle.Dot);
 			fpMonths.plt.YTicks(xs, labels);
 
 			fpMonths.Render();
+		}
+
+		private void RenderGraphDaysOfWeek(Data data)
+		{
+			YearData last_year = data.years[data.years.Count - 1];
+
+			double[] xs = DataGen.Consecutive(last_year.dayofweek_data.Count);
+			double[] ys = new double[last_year.dayofweek_data.Count];
+			string[] labels = new string[last_year.dayofweek_data.Count];
+
+			for (int i = 0; i < last_year.dayofweek_data.Count; i++)
+			{
+				ys[i] = last_year.dayofweek_data[i].counter;
+				labels[i] = last_year.dayofweek_data[i].day_of_week.ToString().Substring(0, 3);
+			}
+
+
+			fpDayOfWeek.plt.PlotBar(xs, ys, horizontal: true, fillColor: Color.SteelBlue);
+			fpDayOfWeek.plt.Grid(enableHorizontal: false, lineStyle: LineStyle.Dot);
+			fpDayOfWeek.plt.YTicks(xs, labels);
+
+			fpDayOfWeek.Render();
 		}
 
 		private Data Parse()

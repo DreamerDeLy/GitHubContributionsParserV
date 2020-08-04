@@ -33,6 +33,7 @@
 			this.tbUser = new System.Windows.Forms.TextBox();
 			this.richTextBox1 = new System.Windows.Forms.RichTextBox();
 			this.fpMonths = new ScottPlot.FormsPlot();
+			this.fpDayOfWeek = new ScottPlot.FormsPlot();
 			this.SuspendLayout();
 			// 
 			// btnParse
@@ -61,7 +62,7 @@
 			this.richTextBox1.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
 			this.richTextBox1.Location = new System.Drawing.Point(351, 40);
 			this.richTextBox1.Name = "richTextBox1";
-			this.richTextBox1.Size = new System.Drawing.Size(298, 432);
+			this.richTextBox1.Size = new System.Drawing.Size(504, 566);
 			this.richTextBox1.TabIndex = 3;
 			this.richTextBox1.Text = "";
 			// 
@@ -69,14 +70,22 @@
 			// 
 			this.fpMonths.Location = new System.Drawing.Point(12, 40);
 			this.fpMonths.Name = "fpMonths";
-			this.fpMonths.Size = new System.Drawing.Size(320, 350);
+			this.fpMonths.Size = new System.Drawing.Size(320, 273);
 			this.fpMonths.TabIndex = 4;
+			// 
+			// fpDayOfWeek
+			// 
+			this.fpDayOfWeek.Location = new System.Drawing.Point(12, 331);
+			this.fpDayOfWeek.Name = "fpDayOfWeek";
+			this.fpDayOfWeek.Size = new System.Drawing.Size(320, 273);
+			this.fpDayOfWeek.TabIndex = 5;
 			// 
 			// FormMain
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(661, 484);
+			this.ClientSize = new System.Drawing.Size(867, 618);
+			this.Controls.Add(this.fpDayOfWeek);
 			this.Controls.Add(this.fpMonths);
 			this.Controls.Add(this.richTextBox1);
 			this.Controls.Add(this.tbUser);
@@ -94,6 +103,7 @@
 		private System.Windows.Forms.TextBox tbUser;
 		private System.Windows.Forms.RichTextBox richTextBox1;
 		private ScottPlot.FormsPlot fpMonths;
+		private ScottPlot.FormsPlot fpDayOfWeek;
 	}
 }
 
