@@ -111,8 +111,19 @@ namespace GitHubContributionsParserV
 				labels[i] = last_year.months_data[i].date.ToString("MMMM").Substring(0, 3).ToUpper();
 			}
 
+			double[] ys_forecast = new double[ys.Length];
+			Array.Copy(ys, ys_forecast, ys.Length);
+
+			for (int i = 0; i < ys_forecast.Length; i++)
+			{
+				ys_forecast[i] = last_year.months_data[i].commits_per_month_forecast;
+			}
+
 			fpMonths.plt.PlotVLine(x: 1000 / 12, color: Color.Red);
-			fpMonths.plt.PlotBar(xs, ys, horizontal: true, fillColor: Color.SteelBlue);
+
+			fpMonths.plt.PlotBar(xs, ys_forecast, horizontal: true, fillColor: Color.Azure, label: "Forecast");
+			fpMonths.plt.PlotBar(xs, ys, horizontal: true, fillColor: Color.SteelBlue, label: "Commits");
+
 			fpMonths.plt.Grid(enableHorizontal: false, lineStyle: LineStyle.Dot);
 			fpMonths.plt.YTicks(xs, labels);
 
@@ -132,7 +143,6 @@ namespace GitHubContributionsParserV
 				ys[i] = last_year.dayofweek_data[i].counter;
 				labels[i] = last_year.dayofweek_data[i].day_of_week.ToString().Substring(0, 3);
 			}
-
 
 			fpDayOfWeek.plt.PlotBar(xs, ys, horizontal: true, fillColor: Color.SteelBlue);
 			fpDayOfWeek.plt.Grid(enableHorizontal: false, lineStyle: LineStyle.Dot);
