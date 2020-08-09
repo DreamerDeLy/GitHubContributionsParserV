@@ -122,6 +122,7 @@ namespace GitHubContributionsParserV
 			xs = xs.Reverse().ToArray();
 
 			fpMonths.plt.PlotVLine(x: 1000 / 12, color: Color.Red);
+			fpMonths.plt.PlotVLine(x: ys.Average(), color: Color.Gold);
 
 			fpMonths.plt.PlotBar(xs, ys_forecast, horizontal: true, fillColor: Color.Azure, label: "Forecast");
 			fpMonths.plt.PlotBar(xs, ys, horizontal: true, fillColor: Color.SteelBlue, label: "Commits");
@@ -147,6 +148,8 @@ namespace GitHubContributionsParserV
 			}
 
 			xs = xs.Reverse().ToArray();
+
+			fpDayOfWeek.plt.PlotVLine(x: ys.Average(), color: Color.Gold);
 
 			fpDayOfWeek.plt.PlotBar(xs, ys, horizontal: true, fillColor: Color.SteelBlue);
 			fpDayOfWeek.plt.Grid(enableHorizontal: false, lineStyle: LineStyle.Dot);
