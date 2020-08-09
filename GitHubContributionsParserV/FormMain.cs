@@ -99,9 +99,24 @@ namespace GitHubContributionsParserV
 
 		private Data Parse()
 		{
+			try
+			{
+				int i = Int32.Parse(tbStartYear.Text);
+
+				if (i < 2000 || i > DateTime.Now.Year)
+				{
+					tbStartYear.Text = "2017";
+				}
+			}
+			catch
+			{
+				tbStartYear.Text = "2017";
+			}
+
+
 			Data data = new Data();
 
-			for (int year = 2017; year <= DateTime.Now.Year; year++)
+			for (int year = Int32.Parse(tbStartYear.Text); year <= DateTime.Now.Year; year++)
 			{
 				string url = $"https://github.com/{tbUser.Text}/?tab=overview&from={year}-01-01&to={year}-12-31";
 
