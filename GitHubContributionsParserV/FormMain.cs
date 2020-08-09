@@ -119,6 +119,8 @@ namespace GitHubContributionsParserV
 				ys_forecast[i] = last_year.months_data[i].commits_per_month_forecast;
 			}
 
+			xs = xs.Reverse().ToArray();
+
 			fpMonths.plt.PlotVLine(x: 1000 / 12, color: Color.Red);
 
 			fpMonths.plt.PlotBar(xs, ys_forecast, horizontal: true, fillColor: Color.Azure, label: "Forecast");
@@ -143,6 +145,8 @@ namespace GitHubContributionsParserV
 				ys[i] = last_year.dayofweek_data[i].counter;
 				labels[i] = last_year.dayofweek_data[i].day_of_week.ToString().Substring(0, 3);
 			}
+
+			xs = xs.Reverse().ToArray();
 
 			fpDayOfWeek.plt.PlotBar(xs, ys, horizontal: true, fillColor: Color.SteelBlue);
 			fpDayOfWeek.plt.Grid(enableHorizontal: false, lineStyle: LineStyle.Dot);
