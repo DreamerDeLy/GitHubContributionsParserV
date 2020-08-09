@@ -34,6 +34,8 @@
 			this.richTextBox1 = new System.Windows.Forms.RichTextBox();
 			this.fpMonths = new ScottPlot.FormsPlot();
 			this.fpDayOfWeek = new ScottPlot.FormsPlot();
+			this.btnAnalyze = new System.Windows.Forms.Button();
+			this.cbYear = new System.Windows.Forms.ComboBox();
 			this.SuspendLayout();
 			// 
 			// btnParse
@@ -80,11 +82,34 @@
 			this.fpDayOfWeek.Size = new System.Drawing.Size(320, 273);
 			this.fpDayOfWeek.TabIndex = 5;
 			// 
+			// btnAnalyze
+			// 
+			this.btnAnalyze.Enabled = false;
+			this.btnAnalyze.Location = new System.Drawing.Point(351, 12);
+			this.btnAnalyze.Name = "btnAnalyze";
+			this.btnAnalyze.Size = new System.Drawing.Size(75, 23);
+			this.btnAnalyze.TabIndex = 6;
+			this.btnAnalyze.Text = "Analyze";
+			this.btnAnalyze.UseVisualStyleBackColor = true;
+			this.btnAnalyze.Click += new System.EventHandler(this.btnAnalyze_Click);
+			// 
+			// cbYear
+			// 
+			this.cbYear.Enabled = false;
+			this.cbYear.FormattingEnabled = true;
+			this.cbYear.Location = new System.Drawing.Point(433, 13);
+			this.cbYear.Name = "cbYear";
+			this.cbYear.Size = new System.Drawing.Size(121, 21);
+			this.cbYear.TabIndex = 7;
+			this.cbYear.DropDown += new System.EventHandler(this.cbYear_DropDown);
+			// 
 			// FormMain
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(867, 618);
+			this.Controls.Add(this.cbYear);
+			this.Controls.Add(this.btnAnalyze);
 			this.Controls.Add(this.fpDayOfWeek);
 			this.Controls.Add(this.fpMonths);
 			this.Controls.Add(this.richTextBox1);
@@ -104,6 +129,8 @@
 		private System.Windows.Forms.RichTextBox richTextBox1;
 		private ScottPlot.FormsPlot fpMonths;
 		private ScottPlot.FormsPlot fpDayOfWeek;
+		private System.Windows.Forms.Button btnAnalyze;
+		private System.Windows.Forms.ComboBox cbYear;
 	}
 }
 

@@ -15,7 +15,7 @@ namespace GitHubContributionsParserV
 {
 	public partial class FormMain : Form
 	{
-		//static Data data;
+		static Data _data;
 
 		public FormMain()
 		{
@@ -24,82 +24,17 @@ namespace GitHubContributionsParserV
 
 		private async void btnParse_Click(object sender, EventArgs e)
 		{
-			Data data = await ParseAsync();
-			YearData last_year = data.years[data.years.Count - 1];
+			_data = await ParseAsync();
 
+			btnAnalyze.Enabled = true;
+			cbYear.Enabled = true;
 
-			richTextBox1.Text += "Year: \r\n";
-			foreach (YearData year in data.years)
-			{
-				richTextBox1.Text += $"{year.date.Year} - {year.counter}\r\n";
-			}
-
-			richTextBox1.Text += "Month: \r\n";
-			last_year.CalculateCommitsPerMonths();
-			foreach (MonthData month in last_year.months_data)
-			{
-				int target = 1000 / 12;
-				int to_target = month.counter - target;
-
-				if (month.counter > 0)
-				{
-					richTextBox1.Text += String.Format("{0:##} - {1} ({2})\r\n", month.date.Month, month.counter, to_target);
-				}
-				else
-				{
-					richTextBox1.Text += String.Format("{0:##} - {1}\r\n", month.date.Month, month.counter);
-				}
-			}
-
-			richTextBox1.Text += "DayOfWeek: \r\n";
-			last_year.CalculateCommitsPerDayOfWeek();
-			foreach (DayOfWeekData dayOfWeekData in last_year.dayofweek_data)
-			{
-				richTextBox1.Text += $"{dayOfWeekData.day_of_week.ToString().Substring(0, 3)} - {dayOfWeekData.counter}\r\n";
-			}
-
-			last_year.CalculateMaxCommitsPerDay();
-			richTextBox1.Text += String.Format("Max commits per day: {0} ({1})\r\n", 
-				last_year.max_per_day, 
-				last_year.max_per_day_date.ToString("yyyy-MM-dd")
-				);
-
-			last_year.CalculateLongestStreak();
-			richTextBox1.Text += String.Format("Longest streak: {0} ({1} - {2})\r\n", 
-				last_year.longest_streak, 
-				last_year.longest_streak_start.ToString("yyyy-MM-dd"), 
-				last_year.longest_streak_end.ToString("yyyy-MM-dd")
-				);
-
-			last_year.CalculateDaysWithCommits();
-			richTextBox1.Text += String.Format("Days with commits:    {0} ({1:00.00}%)\r\n", 
-				last_year.days_with_commits,
-				((double)last_year.days_with_commits / (double)((double)last_year.days_with_commits + (double)last_year.days_without_commits)) * 100.0
-				);
-			richTextBox1.Text += String.Format("Days without commits: {0} ({1:00.00}%)\r\n",
-				last_year.days_without_commits,
-				((double)last_year.days_without_commits / (double)((double)last_year.days_with_commits + (double)last_year.days_without_commits)) * 100.0
-				);
-
-			richTextBox1.Text += "Year:\r\n";
-			last_year.CalculateCommitsPerDayAvg();
-			richTextBox1.Text += String.Format("Commits per day (without zero): {0:#0.000}\r\n", last_year.commits_per_day_wn_avg);
-			richTextBox1.Text += String.Format("Commits per day: {0:#0.000}\r\n", last_year.commits_per_day_avg);
-			richTextBox1.Text += String.Format("Commits per year forecast: {0}\r\n", last_year.commits_per_year_forecast);
-
-			richTextBox1.Text += "Month:\r\n";
-			MonthData last_month = last_year.months_data[DateTime.Now.Month-1];
-			last_month.CalculateCommitsPerDayAvg();
-			richTextBox1.Text += String.Format("Commits per day: {0:#0.000}\r\n", last_month.commits_per_day_avg);
-			richTextBox1.Text += String.Format("Commits per month forecast: {0}\r\n", last_month.commits_per_month_forecast);
-
-			RenderGraphMonthsData(data);
-			RenderGraphDaysOfWeek(data);
+			btnAnalyze.PerformClick();
 		}
 
-		private void RenderGraphMonthsData(Data data)
+		private void RenderGraphMonthsData(Data data, int year_i)
 		{
-			YearData last_year = data.years[data.years.Count - 1];
+			YearData last_year = data.years[year_i];
 
 			double[] xs = DataGen.Consecutive(last_year.months_data.Count);
 			double[] ys = new double[last_year.months_data.Count];
@@ -121,6 +56,8 @@ namespace GitHubContributionsParserV
 
 			xs = xs.Reverse().ToArray();
 
+			fpMonths.plt.Clear();
+
 			fpMonths.plt.PlotVLine(x: 1000 / 12, color: Color.Red);
 			fpMonths.plt.PlotVLine(x: ys.Average(), color: Color.Gold);
 
@@ -133,9 +70,9 @@ namespace GitHubContributionsParserV
 			fpMonths.Render();
 		}
 
-		private void RenderGraphDaysOfWeek(Data data)
+		private void RenderGraphDaysOfWeek(Data data, int year_i)
 		{
-			YearData last_year = data.years[data.years.Count - 1];
+			YearData last_year = data.years[year_i];
 
 			double[] xs = DataGen.Consecutive(last_year.dayofweek_data.Count);
 			double[] ys = new double[last_year.dayofweek_data.Count];
@@ -148,6 +85,8 @@ namespace GitHubContributionsParserV
 			}
 
 			xs = xs.Reverse().ToArray();
+
+			fpDayOfWeek.plt.Clear();
 
 			fpDayOfWeek.plt.PlotVLine(x: ys.Average(), color: Color.Gold);
 
@@ -196,6 +135,118 @@ namespace GitHubContributionsParserV
 		public async Task<Data> ParseAsync()
 		{
 			return await Task.Run(() => Parse());
+		}
+
+		private void Analyze(Data data, int year_i)
+		{
+			YearData current_year = data.years[year_i];
+
+			richTextBox1.Text = "";
+
+			richTextBox1.Text += "Year: \r\n";
+			foreach (YearData year in data.years)
+			{
+				richTextBox1.Text += $"{year.date.Year} - {year.counter}\r\n";
+			}
+
+			richTextBox1.Text += "Month: \r\n";
+			current_year.CalculateCommitsPerMonths();
+			foreach (MonthData month in current_year.months_data)
+			{
+				int target = 1000 / 12;
+				int to_target = month.counter - target;
+
+				if (month.counter > 0)
+				{
+					richTextBox1.Text += String.Format("{0:##} - {1} ({2})\r\n", month.date.Month, month.counter, to_target);
+				}
+				else
+				{
+					richTextBox1.Text += String.Format("{0:##} - {1}\r\n", month.date.Month, month.counter);
+				}
+			}
+
+			richTextBox1.Text += "DayOfWeek: \r\n";
+			current_year.CalculateCommitsPerDayOfWeek();
+			foreach (DayOfWeekData dayOfWeekData in current_year.dayofweek_data)
+			{
+				richTextBox1.Text += $"{dayOfWeekData.day_of_week.ToString().Substring(0, 3)} - {dayOfWeekData.counter}\r\n";
+			}
+
+			current_year.CalculateMaxCommitsPerDay();
+			richTextBox1.Text += String.Format("Max commits per day: {0} ({1})\r\n",
+				current_year.max_per_day,
+				current_year.max_per_day_date.ToString("yyyy-MM-dd")
+				);
+
+			current_year.CalculateLongestStreak();
+			richTextBox1.Text += String.Format("Longest streak: {0} ({1} - {2})\r\n",
+				current_year.longest_streak,
+				current_year.longest_streak_start.ToString("yyyy-MM-dd"),
+				current_year.longest_streak_end.ToString("yyyy-MM-dd")
+				);
+
+			current_year.CalculateDaysWithCommits();
+			richTextBox1.Text += String.Format("Days with commits:    {0} ({1:00.00}%)\r\n",
+				current_year.days_with_commits,
+				((double)current_year.days_with_commits / (double)((double)current_year.days_with_commits + (double)current_year.days_without_commits)) * 100.0
+				);
+			richTextBox1.Text += String.Format("Days without commits: {0} ({1:00.00}%)\r\n",
+				current_year.days_without_commits,
+				((double)current_year.days_without_commits / (double)((double)current_year.days_with_commits + (double)current_year.days_without_commits)) * 100.0
+				);
+
+			richTextBox1.Text += "Year:\r\n";
+			current_year.CalculateCommitsPerDayAvg();
+			richTextBox1.Text += String.Format("Commits per day (without zero): {0:#0.000}\r\n", current_year.commits_per_day_wn_avg);
+			richTextBox1.Text += String.Format("Commits per day: {0:#0.000}\r\n", current_year.commits_per_day_avg);
+			richTextBox1.Text += String.Format("Commits per year forecast: {0}\r\n", current_year.commits_per_year_forecast);
+
+			if (current_year.date.Year == DateTime.Now.Year)
+			{
+				richTextBox1.Text += "Month:\r\n";
+				MonthData last_month = current_year.months_data[DateTime.Now.Month - 1];
+				last_month.CalculateCommitsPerDayAvg();
+				richTextBox1.Text += String.Format("Commits per day: {0:#0.000}\r\n", last_month.commits_per_day_avg);
+				richTextBox1.Text += String.Format("Commits per month forecast: {0}\r\n", last_month.commits_per_month_forecast);
+			}
+
+			RenderGraphMonthsData(data, year_i);
+			RenderGraphDaysOfWeek(data, year_i);
+		}
+
+		private void cbYear_DropDown(object sender, EventArgs e)
+		{
+			GenerateYearsMenu();
+		}
+
+		private void GenerateYearsMenu()
+		{
+			int i = cbYear.SelectedIndex;
+			cbYear.Items.Clear();
+
+			foreach (YearData y in _data.years)
+			{
+				cbYear.Items.Add(y.date.Year.ToString());
+			}
+
+			if (i >= 0)
+			{
+				cbYear.SelectedIndex = i;
+			}
+			else
+			{
+				cbYear.SelectedIndex = _data.years.Count - 1;
+			}
+		}
+
+		private void btnAnalyze_Click(object sender, EventArgs e)
+		{
+			GenerateYearsMenu();
+
+			Data data = new Data();
+			data = _data;
+			Analyze(data, cbYear.SelectedIndex);
 		}
 	}
 }
