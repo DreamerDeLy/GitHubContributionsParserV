@@ -40,9 +40,8 @@ namespace GitHubContributionsParserV
 		public double commits_per_day_wn_avg = 0; // without 0 
 		public int commits_per_year_forecast = 0;
 
-		public YearData(int counter, DateTime date)
+		public YearData(DateTime date)
 		{
-			this.counter = counter;
 			this.date = date;
 		}
 

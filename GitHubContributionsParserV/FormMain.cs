@@ -97,6 +97,31 @@ namespace GitHubContributionsParserV
 			fpDayOfWeek.Render();
 		}
 
+		private void RenderGraphYearsData(Data data)
+		{
+			double[] xs = DataGen.Consecutive(data.years.Count);
+			double[] ys = new double[data.years.Count];
+			string[] labels = new string[data.years.Count];
+
+			for (int i = 0; i < data.years.Count; i++)
+			{
+				ys[i] = data.years[i].counter;
+				labels[i] = data.years[i].date.Year.ToString();
+			}
+
+			xs = xs.Reverse().ToArray();
+
+			fpYears.plt.Clear();
+
+			fpYears.plt.PlotHLine(y: ys.Average(), color: Color.Gold);
+
+			fpYears.plt.PlotBar(xs, ys, fillColor: Color.SteelBlue);
+			fpYears.plt.Grid(lineStyle: LineStyle.Dot);
+			fpYears.plt.XTicks(xs, labels);
+
+			fpYears.Render();
+		}
+
 		private Data Parse()
 		{
 			try
@@ -124,9 +149,8 @@ namespace GitHubContributionsParserV
 				HtmlAgilityPack.HtmlDocument doc = web.Load(url);
 
 				HtmlAgilityPack.HtmlNode node = doc.DocumentNode.SelectSingleNode("//h2[@class='f4 text-normal mb-2']");
-				int counter = Int32.Parse(node.InnerText.Trim().Split()[0]);
 
-				YearData current = new YearData(counter, new DateTime(year, 1, 1));
+				YearData current = new YearData(new DateTime(year, 1, 1));
 
 				foreach (HtmlNode nodeDay in doc.DocumentNode.SelectNodes("//rect[@class='day']"))
 				{
@@ -140,6 +164,8 @@ namespace GitHubContributionsParserV
 
 					current.calendar.Add(day);
 				}
+
+				current.counter = current.calendar.Sum(d => d.counter);
 
 				data.years.Add(current);
 			}
@@ -228,6 +254,7 @@ namespace GitHubContributionsParserV
 
 			RenderGraphMonthsData(data, year_i);
 			RenderGraphDaysOfWeek(data, year_i);
+			RenderGraphYearsData(data);
 		}
 
 		private void cbYear_DropDown(object sender, EventArgs e)
