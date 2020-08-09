@@ -48,6 +48,8 @@ namespace GitHubContributionsParserV
 
 		public void CalculateCommitsPerMonths()
 		{
+			months_data.Clear();
+
 			var groupedMonths = calendar
 				.GroupBy(d => d.date.Month)
 				.Select(grp => grp.ToList())
@@ -62,6 +64,8 @@ namespace GitHubContributionsParserV
 
 		public void CalculateCommitsPerDayOfWeek()
 		{
+			dayofweek_data.Clear();
+
 			var groupedDayOfWeek = calendar
 				.GroupBy(d => d.date.DayOfWeek)
 				.Select(grp => grp.ToList())
