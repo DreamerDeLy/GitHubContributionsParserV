@@ -109,8 +109,6 @@ namespace GitHubContributionsParserV
 				labels[i] = data.years[i].date.Year.ToString();
 			}
 
-			xs = xs.Reverse().ToArray();
-
 			fpYears.plt.Clear();
 
 			fpYears.plt.PlotHLine(y: ys.Average(), color: Color.Gold);
