@@ -121,21 +121,18 @@ namespace GitHubContributionsParserV
 		public void CalculateDaysWithCommits()
 		{
 			days_with_commits = calendar.Where(d => (d.counter > 0)).Count();
-			days_without_commits = Convert.ToInt32((DateTime.Now - date).TotalDays) - days_with_commits;
+			if (date.Year == DateTime.Now.Year)
+				days_without_commits = Convert.ToInt32((DateTime.Now - date).TotalDays) - days_with_commits;
+			else
+				days_without_commits = (DateTime.IsLeapYear(date.Year) ? 366 : 365) - days_with_commits;
 		}
 
 		public void CalculateCommitsPerDayAvg()
 		{
 			commits_per_day_avg = (double)counter / (double)DateTime.Now.DayOfYear;
 
-			if (DateTime.IsLeapYear(date.Year))
-			{
-				commits_per_year_forecast = Convert.ToInt32(366.0 * commits_per_day_avg);
-			}
-			else
-			{
-				commits_per_year_forecast = Convert.ToInt32(365.0 * commits_per_day_avg);
-			}
+			commits_per_year_forecast = Convert.ToInt32(
+				(DateTime.IsLeapYear(date.Year) ? 366 : 365) * commits_per_day_avg);
 
 			commits_per_day_wn_avg = calendar.Where(d => d.counter > 0).Average(d => d.counter);
 		}
