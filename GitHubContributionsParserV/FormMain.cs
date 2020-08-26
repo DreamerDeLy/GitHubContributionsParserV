@@ -62,7 +62,7 @@ namespace GitHubContributionsParserV
 			fpMonths.plt.PlotVLine(x: ys.Average(), color: Color.Gold);
 
 			fpMonths.plt.PlotBar(xs, ys_forecast, horizontal: true, fillColor: Color.Azure, label: "Forecast");
-			fpMonths.plt.PlotBar(xs, ys, horizontal: true, fillColor: Color.SteelBlue, label: "Commits");
+			fpMonths.plt.PlotBar(xs, ys, horizontal: true, fillColor: Color.SteelBlue, label: "Commits", showValues: true);
 
 			fpMonths.plt.Grid(enableHorizontal: false, lineStyle: LineStyle.Dot);
 			fpMonths.plt.YTicks(xs, labels);
@@ -90,7 +90,7 @@ namespace GitHubContributionsParserV
 
 			fpDayOfWeek.plt.PlotVLine(x: ys.Average(), color: Color.Gold);
 
-			fpDayOfWeek.plt.PlotBar(xs, ys, horizontal: true, fillColor: Color.SteelBlue);
+			fpDayOfWeek.plt.PlotBar(xs, ys, horizontal: true, fillColor: Color.SteelBlue, showValues: true);
 			fpDayOfWeek.plt.Grid(enableHorizontal: false, lineStyle: LineStyle.Dot);
 			fpDayOfWeek.plt.YTicks(xs, labels);
 
@@ -113,7 +113,7 @@ namespace GitHubContributionsParserV
 
 			fpYears.plt.PlotHLine(y: ys.Average(), color: Color.Gold);
 
-			fpYears.plt.PlotBar(xs, ys, fillColor: Color.SteelBlue);
+			fpYears.plt.PlotBar(xs, ys, fillColor: Color.SteelBlue, showValues: true);
 			fpYears.plt.Grid(lineStyle: LineStyle.Dot);
 			fpYears.plt.XTicks(xs, labels);
 

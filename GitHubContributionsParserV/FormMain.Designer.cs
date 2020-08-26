@@ -64,9 +64,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.richTextBox1.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.richTextBox1.Location = new System.Drawing.Point(338, 206);
+			this.richTextBox1.Location = new System.Drawing.Point(12, 319);
 			this.richTextBox1.Name = "richTextBox1";
-			this.richTextBox1.Size = new System.Drawing.Size(321, 401);
+			this.richTextBox1.Size = new System.Drawing.Size(969, 287);
 			this.richTextBox1.TabIndex = 3;
 			this.richTextBox1.Text = "";
 			// 
@@ -74,22 +74,22 @@
 			// 
 			this.fpMonths.Location = new System.Drawing.Point(12, 40);
 			this.fpMonths.Name = "fpMonths";
-			this.fpMonths.Size = new System.Drawing.Size(320, 273);
+			this.fpMonths.Size = new System.Drawing.Size(320, 272);
 			this.fpMonths.TabIndex = 4;
 			// 
 			// fpDayOfWeek
 			// 
-			this.fpDayOfWeek.Location = new System.Drawing.Point(12, 331);
+			this.fpDayOfWeek.Location = new System.Drawing.Point(661, 40);
 			this.fpDayOfWeek.Name = "fpDayOfWeek";
-			this.fpDayOfWeek.Size = new System.Drawing.Size(320, 273);
+			this.fpDayOfWeek.Size = new System.Drawing.Size(320, 272);
 			this.fpDayOfWeek.TabIndex = 5;
 			// 
 			// btnAnalyze
 			// 
 			this.btnAnalyze.Enabled = false;
-			this.btnAnalyze.Location = new System.Drawing.Point(338, 12);
+			this.btnAnalyze.Location = new System.Drawing.Point(338, 11);
 			this.btnAnalyze.Name = "btnAnalyze";
-			this.btnAnalyze.Size = new System.Drawing.Size(75, 23);
+			this.btnAnalyze.Size = new System.Drawing.Size(75, 22);
 			this.btnAnalyze.TabIndex = 6;
 			this.btnAnalyze.Text = "Analyze";
 			this.btnAnalyze.UseVisualStyleBackColor = true;
@@ -99,7 +99,7 @@
 			// 
 			this.cbYear.Enabled = false;
 			this.cbYear.FormattingEnabled = true;
-			this.cbYear.Location = new System.Drawing.Point(419, 14);
+			this.cbYear.Location = new System.Drawing.Point(419, 12);
 			this.cbYear.Name = "cbYear";
 			this.cbYear.Size = new System.Drawing.Size(121, 21);
 			this.cbYear.TabIndex = 7;
@@ -116,16 +116,16 @@
 			// 
 			// fpYears
 			// 
-			this.fpYears.Location = new System.Drawing.Point(338, 41);
+			this.fpYears.Location = new System.Drawing.Point(335, 40);
 			this.fpYears.Name = "fpYears";
-			this.fpYears.Size = new System.Drawing.Size(320, 159);
+			this.fpYears.Size = new System.Drawing.Size(320, 272);
 			this.fpYears.TabIndex = 9;
 			// 
 			// FormMain
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(671, 618);
+			this.ClientSize = new System.Drawing.Size(993, 618);
 			this.Controls.Add(this.fpYears);
 			this.Controls.Add(this.tbStartYear);
 			this.Controls.Add(this.cbYear);
