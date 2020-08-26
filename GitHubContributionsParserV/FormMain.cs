@@ -120,6 +120,28 @@ namespace GitHubContributionsParserV
 			fpYears.Render();
 		}
 
+		private void RenderGraphDaysWithAndWithout(Data data, int year_i)
+		{
+			double[] values =
+			{
+				data.years[year_i].days_without_commits,
+				data.years[year_i].days_with_commits
+			};
+
+			string[] labels = { "Days with commits", "Days without commits" };
+
+			fpDaysWihAndWithout.plt.Clear();
+
+			fpDaysWihAndWithout.plt.PlotPie(values, labels, explodedChart: true, showValues: true, showPercentages: true, showLabels: false);
+
+			fpDaysWihAndWithout.plt.Grid(false);
+			fpDaysWihAndWithout.plt.Ticks(false, false);
+
+			fpDaysWihAndWithout.plt.Legend();
+
+			fpDaysWihAndWithout.Render();
+		}
+
 		private Data Parse()
 		{
 			try
@@ -253,6 +275,7 @@ namespace GitHubContributionsParserV
 			RenderGraphMonthsData(data, year_i);
 			RenderGraphDaysOfWeek(data, year_i);
 			RenderGraphYearsData(data);
+			RenderGraphDaysWithAndWithout(data, year_i);
 		}
 
 		private void cbYear_DropDown(object sender, EventArgs e)
