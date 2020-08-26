@@ -128,7 +128,7 @@ namespace GitHubContributionsParserV
 				data.years[year_i].days_with_commits
 			};
 
-			string[] labels = { "Days with commits", "Days without commits" };
+			string[] labels = { "Days without commits", "Days with commits" };
 
 			fpDaysWihAndWithout.plt.Clear();
 
