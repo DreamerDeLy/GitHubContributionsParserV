@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,19 +18,67 @@ namespace GitHubContributionsParserV
 	{
 		static Data _data;
 
+		static List<string> last_users = new List<string>();
+		const string last_users_file = "last_users.txt";
+
+		const string my_username = "DreamerDeLy";
+
 		public FormMain()
 		{
 			InitializeComponent();
+
+			LoadLastUsers();
+		}
+
+		private void SaveLastUsers()
+		{
+			try
+			{
+				File.WriteAllLines(last_users_file, last_users);
+			}
+			catch
+			{
+				//
+			}
+		}
+
+		private void LoadLastUsers()
+		{
+			try
+			{
+				string[] lines = File.ReadAllLines(last_users_file);
+				last_users = lines.ToList();
+			}
+			catch
+			{
+				//
+			}
+
+			if (!last_users.Contains(my_username))
+			{
+				last_users.Insert(0, my_username);
+			}
+
+			cbUser.Items.Clear();
+			cbUser.Items.AddRange(last_users.ToArray());
+			cbUser.SelectedIndex = 0;
 		}
 
 		private async void btnParse_Click(object sender, EventArgs e)
 		{
-			_data = await ParseAsync();
+			string user = cbUser.Text;
+			_data = await ParseAsync(user);
 
 			cbYear.Enabled = true;
 
 			GenerateYearsMenu();
 			Analyze(_data, cbYear.SelectedIndex);
+
+			if (!last_users.Contains(user))
+			{
+				last_users.Add(user);
+				cbUser.Items.Add(user);
+			}
 		}
 
 		private void RenderGraphMonthsData(Data data, int year_i)
@@ -142,7 +191,7 @@ namespace GitHubContributionsParserV
 			fpDaysWihAndWithout.Render();
 		}
 
-		private Data Parse()
+		private Data Parse(string user)
 		{
 			try
 			{
@@ -158,12 +207,11 @@ namespace GitHubContributionsParserV
 				tbStartYear.Text = "2017";
 			}
 
-
 			Data data = new Data();
 
 			for (int year = Int32.Parse(tbStartYear.Text); year <= DateTime.Now.Year; year++)
 			{
-				string url = $"https://github.com/{tbUser.Text}/?tab=overview&from={year}-01-01&to={year}-12-31";
+				string url = $"https://github.com/{user}/?tab=overview&from={year}-01-01&to={year}-12-31";
 
 				HtmlAgilityPack.HtmlWeb web = new HtmlAgilityPack.HtmlWeb();
 				HtmlAgilityPack.HtmlDocument doc = web.Load(url);
@@ -193,9 +241,9 @@ namespace GitHubContributionsParserV
 			return data;
 		}
 
-		public async Task<Data> ParseAsync()
+		public async Task<Data> ParseAsync(string user)
 		{
-			return await Task.Run(() => Parse());
+			return await Task.Run(() => Parse(user));
 		}
 
 		private void Analyze(Data data, int year_i)
@@ -308,6 +356,11 @@ namespace GitHubContributionsParserV
 			Data data = new Data();
 			data = _data;
 			Analyze(data, cbYear.SelectedIndex);
+		}
+
+		private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
+		{
+			SaveLastUsers();
 		}
 	}
 }

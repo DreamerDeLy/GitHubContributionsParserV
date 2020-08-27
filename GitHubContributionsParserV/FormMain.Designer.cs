@@ -30,7 +30,6 @@
 		{
 			this.components = new System.ComponentModel.Container();
 			this.btnParse = new System.Windows.Forms.Button();
-			this.tbUser = new System.Windows.Forms.TextBox();
 			this.richTextBox1 = new System.Windows.Forms.RichTextBox();
 			this.cbYear = new System.Windows.Forms.ComboBox();
 			this.tbStartYear = new System.Windows.Forms.TextBox();
@@ -39,26 +38,19 @@
 			this.fpYears = new ScottPlot.FormsPlot();
 			this.fpDayOfWeek = new ScottPlot.FormsPlot();
 			this.fpDaysWihAndWithout = new ScottPlot.FormsPlot();
+			this.cbUser = new System.Windows.Forms.ComboBox();
 			this.flowLayoutPanel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// btnParse
 			// 
-			this.btnParse.Location = new System.Drawing.Point(161, 11);
+			this.btnParse.Location = new System.Drawing.Point(182, 10);
 			this.btnParse.Name = "btnParse";
 			this.btnParse.Size = new System.Drawing.Size(75, 22);
 			this.btnParse.TabIndex = 0;
 			this.btnParse.Text = "Parse";
 			this.btnParse.UseVisualStyleBackColor = true;
 			this.btnParse.Click += new System.EventHandler(this.btnParse_Click);
-			// 
-			// tbUser
-			// 
-			this.tbUser.Location = new System.Drawing.Point(12, 12);
-			this.tbUser.Name = "tbUser";
-			this.tbUser.Size = new System.Drawing.Size(100, 20);
-			this.tbUser.TabIndex = 1;
-			this.tbUser.Text = "DreamerDeLy";
 			// 
 			// richTextBox1
 			// 
@@ -84,7 +76,7 @@
 			// 
 			// tbStartYear
 			// 
-			this.tbStartYear.Location = new System.Drawing.Point(118, 12);
+			this.tbStartYear.Location = new System.Drawing.Point(139, 11);
 			this.tbStartYear.MaxLength = 4;
 			this.tbStartYear.Name = "tbStartYear";
 			this.tbStartYear.Size = new System.Drawing.Size(37, 20);
@@ -134,19 +126,30 @@
 			this.fpDaysWihAndWithout.Size = new System.Drawing.Size(320, 272);
 			this.fpDaysWihAndWithout.TabIndex = 12;
 			// 
+			// cbUser
+			// 
+			this.cbUser.FormattingEnabled = true;
+			this.cbUser.Items.AddRange(new object[] {
+            "DreamerDeLy"});
+			this.cbUser.Location = new System.Drawing.Point(12, 11);
+			this.cbUser.Name = "cbUser";
+			this.cbUser.Size = new System.Drawing.Size(121, 21);
+			this.cbUser.TabIndex = 11;
+			// 
 			// FormMain
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1121, 619);
+			this.Controls.Add(this.cbUser);
 			this.Controls.Add(this.flowLayoutPanel1);
 			this.Controls.Add(this.tbStartYear);
 			this.Controls.Add(this.cbYear);
 			this.Controls.Add(this.richTextBox1);
-			this.Controls.Add(this.tbUser);
 			this.Controls.Add(this.btnParse);
 			this.Name = "FormMain";
 			this.Text = "ContributionsParserV";
+			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormMain_FormClosed);
 			this.flowLayoutPanel1.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
@@ -156,7 +159,6 @@
 		#endregion
 
 		private System.Windows.Forms.Button btnParse;
-		private System.Windows.Forms.TextBox tbUser;
 		private System.Windows.Forms.RichTextBox richTextBox1;
 		private System.Windows.Forms.ComboBox cbYear;
 		private System.Windows.Forms.TextBox tbStartYear;
@@ -165,6 +167,7 @@
 		private ScottPlot.FormsPlot fpYears;
 		private ScottPlot.FormsPlot fpDayOfWeek;
 		private ScottPlot.FormsPlot fpDaysWihAndWithout;
+		private System.Windows.Forms.ComboBox cbUser;
 	}
 }
 
