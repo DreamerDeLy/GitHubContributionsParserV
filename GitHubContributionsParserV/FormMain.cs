@@ -204,11 +204,11 @@ namespace GitHubContributionsParserV
 
 			richTextBox1.Text = "";
 
-			richTextBox1.Text += "Year: \r\n";
-			foreach (YearData year in data.years)
-			{
-				richTextBox1.Text += $"{year.date.Year} - {year.counter}\r\n";
-			}
+			//richTextBox1.Text += "Year: \r\n";
+			//foreach (YearData year in data.years)
+			//{
+			//	richTextBox1.Text += $"{year.date.Year} - {year.counter}\r\n";
+			//}
 
 			richTextBox1.Text += "Month: \r\n";
 			current_year.CalculateCommitsPerMonths();
@@ -227,12 +227,12 @@ namespace GitHubContributionsParserV
 				}
 			}
 
-			richTextBox1.Text += "DayOfWeek: \r\n";
+			//richTextBox1.Text += "DayOfWeek: \r\n";
 			current_year.CalculateCommitsPerDayOfWeek();
-			foreach (DayOfWeekData dayOfWeekData in current_year.dayofweek_data)
-			{
-				richTextBox1.Text += $"{dayOfWeekData.day_of_week.ToString().Substring(0, 3)} - {dayOfWeekData.counter}\r\n";
-			}
+			//foreach (DayOfWeekData dayOfWeekData in current_year.dayofweek_data)
+			//{
+			//	richTextBox1.Text += $"{dayOfWeekData.day_of_week.ToString().Substring(0, 3)} - {dayOfWeekData.counter}\r\n";
+			//}
 
 			current_year.CalculateMaxCommitsPerDay();
 			richTextBox1.Text += String.Format("Max commits per day: {0} ({1})\r\n",
@@ -248,14 +248,14 @@ namespace GitHubContributionsParserV
 				);
 
 			current_year.CalculateDaysWithCommits();
-			richTextBox1.Text += String.Format("Days with commits:    {0} ({1:00.00}%)\r\n",
-				current_year.days_with_commits,
-				((double)current_year.days_with_commits / (double)((double)current_year.days_with_commits + (double)current_year.days_without_commits)) * 100.0
-				);
-			richTextBox1.Text += String.Format("Days without commits: {0} ({1:00.00}%)\r\n",
-				current_year.days_without_commits,
-				((double)current_year.days_without_commits / (double)((double)current_year.days_with_commits + (double)current_year.days_without_commits)) * 100.0
-				);
+			//richTextBox1.Text += String.Format("Days with commits:    {0} ({1:00.00}%)\r\n",
+			//	current_year.days_with_commits,
+			//	((double)current_year.days_with_commits / (double)((double)current_year.days_with_commits + (double)current_year.days_without_commits)) * 100.0
+			//	);
+			//richTextBox1.Text += String.Format("Days without commits: {0} ({1:00.00}%)\r\n",
+			//	current_year.days_without_commits,
+			//	((double)current_year.days_without_commits / (double)((double)current_year.days_with_commits + (double)current_year.days_without_commits)) * 100.0
+			//	);
 
 			richTextBox1.Text += "Year:\r\n";
 			current_year.CalculateCommitsPerDayAvg();
