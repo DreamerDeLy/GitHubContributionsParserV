@@ -187,7 +187,7 @@ namespace GitHubContributionsParserV
 
 				current.counter = current.calendar.Sum(d => d.counter);
 
-				data.years.Add(current);
+				if (current.counter > 0) data.years.Add(current);
 			}
 
 			return data;
