@@ -26,10 +26,10 @@ namespace GitHubContributionsParserV
 		{
 			_data = await ParseAsync();
 
-			btnAnalyze.Enabled = true;
 			cbYear.Enabled = true;
 
-			btnAnalyze.PerformClick();
+			GenerateYearsMenu();
+			Analyze(_data, cbYear.SelectedIndex);
 		}
 
 		private void RenderGraphMonthsData(Data data, int year_i)
@@ -303,10 +303,8 @@ namespace GitHubContributionsParserV
 			}
 		}
 
-		private void btnAnalyze_Click(object sender, EventArgs e)
+		private void cbYear_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			GenerateYearsMenu();
-
 			Data data = new Data();
 			data = _data;
 			Analyze(data, cbYear.SelectedIndex);

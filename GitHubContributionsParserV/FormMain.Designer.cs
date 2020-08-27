@@ -32,7 +32,6 @@
 			this.btnParse = new System.Windows.Forms.Button();
 			this.tbUser = new System.Windows.Forms.TextBox();
 			this.richTextBox1 = new System.Windows.Forms.RichTextBox();
-			this.btnAnalyze = new System.Windows.Forms.Button();
 			this.cbYear = new System.Windows.Forms.ComboBox();
 			this.tbStartYear = new System.Windows.Forms.TextBox();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
@@ -66,32 +65,22 @@
 			this.richTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.richTextBox1.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.richTextBox1.Location = new System.Drawing.Point(676, 39);
+			this.richTextBox1.Location = new System.Drawing.Point(689, 39);
 			this.richTextBox1.Name = "richTextBox1";
-			this.richTextBox1.Size = new System.Drawing.Size(300, 570);
+			this.richTextBox1.Size = new System.Drawing.Size(420, 570);
 			this.richTextBox1.TabIndex = 3;
 			this.richTextBox1.Text = "";
-			// 
-			// btnAnalyze
-			// 
-			this.btnAnalyze.Enabled = false;
-			this.btnAnalyze.Location = new System.Drawing.Point(341, 11);
-			this.btnAnalyze.Name = "btnAnalyze";
-			this.btnAnalyze.Size = new System.Drawing.Size(75, 22);
-			this.btnAnalyze.TabIndex = 6;
-			this.btnAnalyze.Text = "Analyze";
-			this.btnAnalyze.UseVisualStyleBackColor = true;
-			this.btnAnalyze.Click += new System.EventHandler(this.btnAnalyze_Click);
 			// 
 			// cbYear
 			// 
 			this.cbYear.Enabled = false;
 			this.cbYear.FormattingEnabled = true;
-			this.cbYear.Location = new System.Drawing.Point(422, 12);
+			this.cbYear.Location = new System.Drawing.Point(341, 11);
 			this.cbYear.Name = "cbYear";
 			this.cbYear.Size = new System.Drawing.Size(121, 21);
 			this.cbYear.TabIndex = 7;
 			this.cbYear.DropDown += new System.EventHandler(this.cbYear_DropDown);
+			this.cbYear.SelectedIndexChanged += new System.EventHandler(this.cbYear_SelectedIndexChanged);
 			// 
 			// tbStartYear
 			// 
@@ -114,7 +103,7 @@
 			this.flowLayoutPanel1.Controls.Add(this.fpDaysWihAndWithout);
 			this.flowLayoutPanel1.Location = new System.Drawing.Point(12, 39);
 			this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-			this.flowLayoutPanel1.Size = new System.Drawing.Size(658, 570);
+			this.flowLayoutPanel1.Size = new System.Drawing.Size(671, 570);
 			this.flowLayoutPanel1.TabIndex = 10;
 			// 
 			// fpMonths
@@ -149,11 +138,10 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(988, 619);
+			this.ClientSize = new System.Drawing.Size(1121, 619);
 			this.Controls.Add(this.flowLayoutPanel1);
 			this.Controls.Add(this.tbStartYear);
 			this.Controls.Add(this.cbYear);
-			this.Controls.Add(this.btnAnalyze);
 			this.Controls.Add(this.richTextBox1);
 			this.Controls.Add(this.tbUser);
 			this.Controls.Add(this.btnParse);
@@ -170,7 +158,6 @@
 		private System.Windows.Forms.Button btnParse;
 		private System.Windows.Forms.TextBox tbUser;
 		private System.Windows.Forms.RichTextBox richTextBox1;
-		private System.Windows.Forms.Button btnAnalyze;
 		private System.Windows.Forms.ComboBox cbYear;
 		private System.Windows.Forms.TextBox tbStartYear;
 		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
