@@ -293,7 +293,7 @@ namespace GitHubContributionsParserV
 				cbYear.Items.Add(y.date.Year.ToString());
 			}
 
-			if (i >= 0)
+			if (i >= 0 && i < cbYear.Items.Count)
 			{
 				cbYear.SelectedIndex = i;
 			}
