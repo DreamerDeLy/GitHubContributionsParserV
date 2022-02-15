@@ -85,6 +85,8 @@ namespace GitHubContributionsParserV
 		{
 			YearData last_year = data.years[year_i];
 
+			double avg = last_year.months_data.Where(e => (e.date.Month <= DateTime.Now.Month)).Average(e => e.counter);
+
 			double[] xs = DataGen.Consecutive(last_year.months_data.Count);
 			double[] ys = new double[last_year.months_data.Count];
 			string[] labels = new string[last_year.months_data.Count];
@@ -108,7 +110,7 @@ namespace GitHubContributionsParserV
 			fpMonths.plt.Clear();
 
 			fpMonths.plt.PlotVLine(x: 1000 / 12, color: Color.Red);
-			fpMonths.plt.PlotVLine(x: ys.Average(), color: Color.Gold);
+			fpMonths.plt.PlotVLine(x: avg, color: Color.Gold);
 
 			fpMonths.plt.PlotBar(xs, ys_forecast, horizontal: true, fillColor: Color.Azure, label: "Forecast");
 			fpMonths.plt.PlotBar(xs, ys, horizontal: true, fillColor: Color.SteelBlue, label: "Commits", showValues: true);
