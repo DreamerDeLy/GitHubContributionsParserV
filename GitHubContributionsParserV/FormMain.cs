@@ -220,17 +220,28 @@ namespace GitHubContributionsParserV
 
 				YearData current = new YearData(new DateTime(year, 1, 1));
 
-				foreach (HtmlNode nodeDay in doc.DocumentNode.SelectNodes("//rect[@class='day']"))
+				var dayNodes = doc.DocumentNode.SelectNodes("//rect[@class='ContributionCalendar-day']");
+
+				foreach (HtmlNode nodeDay in dayNodes)
 				{
 					DayData day = new DayData();
 
-					string data_count = nodeDay.Attributes["data-count"].Value;
-					string data_date = nodeDay.Attributes["data-date"].Value;
+					try
+					{
+						string data_count = nodeDay.Attributes["data-count"].Value;
+						string data_date = nodeDay.Attributes["data-date"].Value;
 
-					day.counter = Int32.Parse(data_count);
-					day.date = DateTime.Parse(data_date);
+						day.counter = Int32.Parse(data_count);
+						day.date = DateTime.Parse(data_date);
 
-					current.calendar.Add(day);
+						current.calendar.Add(day);
+					}
+					catch (Exception ex)
+					{
+						//MessageBox.Show(ex.Message + "\r\n\"" + nodeDay.InnerText + "\"\r\n" + nodeDay.Attributes.Count());
+						
+					}
+					
 				}
 
 				current.counter = current.calendar.Sum(d => d.counter);
