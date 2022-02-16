@@ -9,6 +9,18 @@ namespace GitHubContributionsParserV
 	public class Data
 	{
 		public List<YearData> years = new List<YearData>();
+
+		public string ToCSV(char separator = ';')
+		{
+			string result = string.Empty;
+
+			foreach (YearData y in years)
+			{
+				result += y.ToCSV(separator);
+			}
+
+			return result;
+		}
 	}
 
 	public class DayData
@@ -43,6 +55,18 @@ namespace GitHubContributionsParserV
 		public YearData(DateTime date)
 		{
 			this.date = date;
+		}
+
+		public string ToCSV(char separator = ';')
+		{
+			string result = string.Empty;
+
+			foreach (DayData d in calendar)
+			{
+				result += d.date.ToString("yyyy-MM-dd") + separator + d.counter.ToString() + "\r\n";
+			}
+
+			return result;
 		}
 
 		public void CalculateCommitsPerMonths()

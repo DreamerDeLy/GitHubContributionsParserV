@@ -39,6 +39,8 @@
 			this.fpDayOfWeek = new ScottPlot.FormsPlot();
 			this.fpDaysWihAndWithout = new ScottPlot.FormsPlot();
 			this.cbUser = new System.Windows.Forms.ComboBox();
+			this.btnExport = new System.Windows.Forms.Button();
+			this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
 			this.flowLayoutPanel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -136,11 +138,28 @@
 			this.cbUser.Size = new System.Drawing.Size(121, 21);
 			this.cbUser.TabIndex = 11;
 			// 
+			// btnExport
+			// 
+			this.btnExport.Location = new System.Drawing.Point(608, 10);
+			this.btnExport.Name = "btnExport";
+			this.btnExport.Size = new System.Drawing.Size(75, 23);
+			this.btnExport.TabIndex = 12;
+			this.btnExport.Text = "Export to file";
+			this.btnExport.UseVisualStyleBackColor = true;
+			this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
+			// 
+			// saveFileDialog1
+			// 
+			this.saveFileDialog1.DefaultExt = "csv";
+			this.saveFileDialog1.FileName = "GitHub Export";
+			this.saveFileDialog1.Filter = "CSV files|*.csv|All files|*.*";
+			// 
 			// FormMain
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1121, 619);
+			this.Controls.Add(this.btnExport);
 			this.Controls.Add(this.cbUser);
 			this.Controls.Add(this.flowLayoutPanel1);
 			this.Controls.Add(this.tbStartYear);
@@ -168,6 +187,8 @@
 		private ScottPlot.FormsPlot fpDayOfWeek;
 		private ScottPlot.FormsPlot fpDaysWihAndWithout;
 		private System.Windows.Forms.ComboBox cbUser;
+		private System.Windows.Forms.Button btnExport;
+		private System.Windows.Forms.SaveFileDialog saveFileDialog1;
 	}
 }
 

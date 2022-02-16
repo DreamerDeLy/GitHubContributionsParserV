@@ -375,5 +375,28 @@ namespace GitHubContributionsParserV
 		{
 			SaveLastUsers();
 		}
+
+		private void btnExport_Click(object sender, EventArgs e)
+		{
+			if (_data != null)
+			{
+				if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+				{
+					try
+					{
+						File.WriteAllText(saveFileDialog1.FileName, _data.ToCSV());
+						MessageBox.Show("Data saved to \r\n" + saveFileDialog1.FileName, "Data saved");
+					}
+					catch
+					{
+						MessageBox.Show("Saving data error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					}
+				}
+			}
+			else
+			{
+				MessageBox.Show("No data available. Click Parsing first.", "No data available", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+			}
+		}
 	}
 }
