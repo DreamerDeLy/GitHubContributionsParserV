@@ -5,6 +5,7 @@
 ![Screenshot](Screenshot1.png)
 
 ## Features 
+* Export to CSV
 * Displaying graphs 
   * Data by months
   * Data by weekdays 
