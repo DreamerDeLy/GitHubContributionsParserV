@@ -230,13 +230,22 @@ namespace GitHubContributionsParserV
 
 					try
 					{
-						string data_count = nodeDay.Attributes["data-count"].Value;
-						string data_date = nodeDay.Attributes["data-date"].Value;
+						if (nodeDay.Attributes.Contains("data-date"))
+                        {
+							//string data_count = nodeDay.Attributes["data-count"].Value;
+							string data_date = nodeDay.Attributes["data-date"].Value;
+							string data_count = "0";
 
-						day.counter = Int32.Parse(data_count);
-						day.date = DateTime.Parse(data_date);
+							if (!nodeDay.InnerText.StartsWith("No"))
+							{
+								data_count = nodeDay.InnerText.Split(' ')[0];
+							}
 
-						current.calendar.Add(day);
+							day.counter = Int32.Parse(data_count);
+							day.date = DateTime.Parse(data_date);
+
+							current.calendar.Add(day);
+						}
 					}
 					catch (Exception ex)
 					{
