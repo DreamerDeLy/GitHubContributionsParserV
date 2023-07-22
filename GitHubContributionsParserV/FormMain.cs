@@ -222,7 +222,7 @@ namespace GitHubContributionsParserV
 
 				YearData current = new YearData(new DateTime(year, 1, 1));
 
-				var dayNodes = doc.DocumentNode.SelectNodes("//rect[@class='ContributionCalendar-day']");
+				var dayNodes = doc.DocumentNode.SelectNodes("//td[@class='ContributionCalendar-day']");
 
 				foreach (HtmlNode nodeDay in dayNodes)
 				{
